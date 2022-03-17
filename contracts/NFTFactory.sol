@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract NFTFactory is ERC721Enumerable, Ownable {
-    uint256 tokenIds;
-    uint256 maxTokenIds;
+    uint256 public tokenIds = 0;
+    uint256 maxTokenIds = 5000;
     uint256 _tokenPrice = 0.05 ether;
     bool public _paused;
 
@@ -19,14 +19,14 @@ contract NFTFactory is ERC721Enumerable, Ownable {
 
     constructor() ERC721("Factory", "ERCC") {}
 
-    function mint(uint256 _tokenId) public payable onlyWhenNotPaused {
+    function mint() public payable onlyWhenNotPaused {
         require(msg.value > _tokenPrice, "Need to send more Ether");
         require(
             tokenIds < maxTokenIds,
             "Max number of tokens have been minted"
         );
-        tokenIds++;
-        _safeMint(msg.sender, _tokenId);
+        tokenIds += 1;
+        _safeMint(msg.sender, tokenIds);
     }
 
     function setPaused(bool _value) public onlyOwner {

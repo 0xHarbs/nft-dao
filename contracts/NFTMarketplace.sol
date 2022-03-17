@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "./NFTFactory.sol";
+import "hardhat/console.sol";
 
 contract NFTMarketplace is NFTFactory {
     uint256 saleCounter;
